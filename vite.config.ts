@@ -6,5 +6,6 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(),
     tailwindcss(),],
+  base: '/birthday-pokemon/'  // 👈 MUST match your repo name
 })
 
