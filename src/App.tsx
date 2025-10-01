@@ -18,7 +18,7 @@ function App() {
           find out your Pokémon birthday twin! Year Agnostic
         </p>
         {/* <div className="flex flex-col lg:flex-row sm:flex-wrap justify-center items-center bg-yellow-50 p-4 rounded-xl shadow-lg gap-4"> */}
-        <div className="flex md:flex-row bg-yellow-50 p-4 rounded-xl shadow-lg gap-4 sm:flex-col">
+        <div className="flex sm:flex-col md:flex-col lg:flex-row bg-yellow-50 p-4 rounded-xl shadow-lg gap-4">
           <div className="px-4 w-full md:w-auto justify-center">
             <DatePicker
               selectedDate={selectedDate}
