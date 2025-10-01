@@ -1,36 +1,31 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import DatePicker from './components/DatePicker'
+import PokemonCard from './components/PokemonCard'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(() => {
+    const today = new Date(Date.now());
+    return today;
+  })
 
   return (
-    <>
-      <div className="mx-auto flex max-w-sm items-center gap-x-4 rounded-xl bg-white p-6 shadow-lg outline outline-black/5 dark:bg-slate-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
-
-        <a href="https://vite.dev" target="_blank">
-
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="min-h-screen flex items-center justify-center px-4 bg-green-200 text-shadow-sm">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <div className="w-full max-w-4xl text-center">
+        <h1 className="text-8xl text-shadow-lg">Pokémon Birthday</h1>
+        <p className="mb-4">find out your Pokémon birthday twin! Year Agnostic</p>
+        {/* <div className="flex flex-col lg:flex-row sm:flex-wrap justify-center items-center bg-yellow-50 p-4 rounded-xl shadow-lg gap-4"> */}
+        <div className="flex md:flex-row bg-yellow-50 p-4 rounded-xl shadow-lg gap-4 sm:flex-col"> 
+          <div className='px-4 w-full md:w-auto justify-center'>
+            <DatePicker selectedDate={selectedDate} onDateChange={setSelectedDate} />
+          </div>
+          <div className='px-4 w-full md:w-auto'>
+            <PokemonCard selectedDate={selectedDate} />
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
