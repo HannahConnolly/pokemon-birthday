@@ -1,7 +1,8 @@
 {
-  "name": "birthday-pokemon",
-  "homepage": "https://hannahconnolly.github.io/birthday-pokemon/",
+  "name": "pokemon-birthday",
+  "homepage": "https://hannahconnolly.github.io/pokemon-birthday/",
   "private": true,
+  "license": "MIT",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
