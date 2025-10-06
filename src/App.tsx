@@ -28,6 +28,9 @@ function App() {
             <PokemonCard selectedDate={selectedDate} />
           </div>
         </div>
+        <footer className="mt-8 text-sm text-gray-700">
+          <p>made with https://pokeapi.co/</p>
+        </footer>
       </div>
     </div>
   );

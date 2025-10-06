@@ -18,6 +18,7 @@ const PokemonCard: React.FC<{ selectedDate: Date | undefined }> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [rollover, setRollover] = useState<boolean>(false);
+  const [dateFormat, setDateFormat] = useState<"US" | "UK">("US");
 
   async function handleFetch() {
     if (!selectedDate) return;
@@ -26,8 +27,6 @@ const PokemonCard: React.FC<{ selectedDate: Date | undefined }> = ({
     setError("");
     setPokemon(null);
     const rawId = computeId(selectedDate);
-    const rolloverOccurred = rawId > MAX_POKEMON_ID;
-    setRollover(rolloverOccurred);
     const id = ((rawId - 1) % MAX_POKEMON_ID) + 1; // wrap into 1..MAX
     try {
       const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
@@ -35,7 +34,7 @@ const PokemonCard: React.FC<{ selectedDate: Date | undefined }> = ({
       const data = await res.json();
       setPokemon({
         id,
-        name: data.name,
+        name: data.name.replace("-", " "),
         sprite:
           data.sprites?.other?.["official-artwork"]?.front_default ||
           data.sprites?.front_default ||
@@ -55,20 +54,23 @@ const PokemonCard: React.FC<{ selectedDate: Date | undefined }> = ({
     if (!date) return 1;
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    const raw = month * 100 + day; // e.g., Jan 1 => 101
+    // US format: MMDD, UK format: DDMM
+    const raw = dateFormat === "US" ? month * 100 + day : day * 100 + month;
+    const rolloverOccurred = raw > MAX_POKEMON_ID;
+    setRollover(rolloverOccurred);
+    console.log("Computed raw ID:", raw);
     return raw;
   }
 
   useEffect(() => {
     // auto-fetch when the selected date changes
-    if (selectedDate) {
+    if (selectedDate || dateFormat) {
       handleFetch();
     } else {
       setPokemon(null);
-      setRollover(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDate]);
+  }, [selectedDate, dateFormat]);
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4">
@@ -107,6 +109,22 @@ const PokemonCard: React.FC<{ selectedDate: Date | undefined }> = ({
       {!loading && !error && !pokemon && (
         <p className="text-gray-600">No Pokémon loaded yet.</p>
       )}
+
+      <p className="text-gray-600">Date format: </p>
+      <div className="flex flex-row justify-center">
+        <p
+          onClick={() => setDateFormat("US")}
+          className={"text-6xl " + (dateFormat === "US" ? "bg-green-100" : "")}
+        >
+          🇺🇸
+        </p>
+        <p
+          onClick={() => setDateFormat("UK")}
+          className={"text-6xl " + (dateFormat === "UK" ? "bg-green-100" : "")}
+        >
+          🇬🇧
+        </p>
+      </div>
     </div>
   );
 };

@@ -47,11 +47,3 @@ npm run deploy
 This repository is licensed under the MIT License — see the `LICENSE` file for details.
 
 ---
-
-If you'd like, I can also:
-
-- add CI/deploy GitHub Actions to automate build + `gh-pages` deploy
-- add tests for the ID computation and `PokemonCard` behavior
-- add example screenshots to the README
-
-Tell me which of those you'd like next and I can implement it.
